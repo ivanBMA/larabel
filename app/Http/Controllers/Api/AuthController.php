@@ -14,9 +14,11 @@ class AuthController extends Controller
     //Prohibir crear un libro en la api a usuario.
     function __construct()
     {
-        $this->middleware('auth:api', ['except' =>
-            ['login', 'register', 'logout', 'refresh', 'usuarioLogeado']
-        ]);//Deniega todo exceptio
+        
+            $this->middleware('auth:api', ['except' =>
+                ['login', 'register', 'logout', 'refresh', 'usuarioLogeado', 'mostrarEmails']
+            ]);//Deniega todo excepto
+        
     }
 
     function register(Request $request)
@@ -144,7 +146,9 @@ class AuthController extends Controller
 
     public function amILogged(){
         $logged = Auth::guard('api')->check();
-        if ($logged) {
+        $userRol = Auth::guard('api')->user();
+
+        if ($logged && $userRol->rol == "user") {
             return response()->json([
                 "status" => "Ok",
                 "message" => "Estas logeado"
@@ -155,6 +159,26 @@ class AuthController extends Controller
             "status" => "fail",
             "message" => "No estas logeado"
         ], 403);
+    }
+
+    function mostrarEmails(){
+        $user = Auth::guard('api')->user();
+
+
+        if(!$user){
+            $emails = User::pluck('email');
+            return response()->json([
+                "status" => "ok",
+                "message" => " no hay usuario logeado",
+                "data" => $emails
+            ], 200);
+        }
+
+        return response()->json([
+            "status" => "fail",
+            "message" => "hay un usuario logeado",
+            "data" => $user
+        ], 404);
     }
 
 

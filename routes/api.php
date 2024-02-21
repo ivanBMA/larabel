@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookApiController;
 use App\Models\Study;
 use App\Http\Controllers\Api\UserApiController;
+use App\Http\Controllers\Api\UserInfoApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ Route::get('/info', function(){
     return response()->json($data, 200);
 });
 
-Route::resource('/books', BookApiController::class)->except(['create', 'edit']);
+//Route::resource('/books', BookApiController::class)->except(['create', 'edit']);
 Route::apiResource('/users', UserApiController::class);
 Route::post('/register',[ AuthController::class, 'register']);
 Route::post('/login',[ AuthController::class, 'login']);
@@ -38,11 +39,26 @@ Route::post('/logout',[ AuthController::class, 'logout']);
 Route::post('/refresh',[ AuthController::class, 'refresh']);
 Route::post('/usuarioLogeado',[ AuthController::class, 'usuarioLogeado']);
 Route::get('/amILogged',[ AuthController::class, 'amILogged']);
+Route::get('/mostrarEmails',[ AuthController::class, 'mostrarEmails']);
 
+/*
+Route::get('/usernames',[ UserInfoApiController::class, 'getUsersNames'])
+    ->middleware('userinfo');
+*/
+Route::get('/usernames',[ UserInfoApiController::class, 'getUsersNames']);
+
+/*
 Route::group(["middleware" => "role:admin,manager"], function () {
     Route::get("book/json", [BookApiController::class, "json"])->name("posts.json");
     Route::resource("book/create", BookApiController::class)->only("create");
 });
+*/
+
+
+Route::middleware('Bookinfo')->group(function () {
+    Route::resource('/books', BookApiController::class);
+});
+
 
 
 

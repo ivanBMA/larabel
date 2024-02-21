@@ -20,6 +20,7 @@ class BookApiController extends Controller
             ['show']
         ]);//Deniega todo exceptio
         */
+        //$this->middleware(['Bookinfo', 'auth:api']);
     }
 
     public function index()
