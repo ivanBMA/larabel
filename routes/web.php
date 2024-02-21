@@ -4,8 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Book;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookAjaxController;
 use GuzzleHttp\Psr7\Response;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +23,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+	Route::get('ajbooks', [BookAjaxController::class, 'index']);
+	Route::post('ajaddbook', [BookAjaxController::class, 'store']);
+	Route::post('ajeditbook', [BookAjaxController::class, 'edit']);
+	Route::post('ajdeletebook', [BookAjaxController::class, 'destroy']);
 //"Bienvenido a la Api Laravel 20"
 
 
