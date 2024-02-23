@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookApiController;
+use App\Http\Controllers\Api\InstitutoApiController;
 use App\Models\Study;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\UserInfoApiController;
@@ -18,6 +19,10 @@ use App\Http\Controllers\Api\UserInfoApiController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::resource('/intituto', InstitutoApiController::class);
+Route::post('/intituto/store',[ InstitutoApiController::class, 'store']);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -53,6 +58,10 @@ Route::group(["middleware" => "role:admin,manager"], function () {
     Route::resource("book/create", BookApiController::class)->only("create");
 });
 */
+
+    Route::resource('/books', BookApiController::class)
+        ->except('index')
+        ->middleware(['badips', 'badDominio']);      //el nombre del alias se cambia en el Kernerl (app\Http\Kernel)
 
 
 Route::middleware('Bookinfo')->group(function () {

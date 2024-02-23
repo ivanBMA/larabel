@@ -225,11 +225,8 @@
                 //ajax  EDITAR/MOSTRAR LIBRO 
 
                 $('body').on('click', '.edit', function(event) {
-
                     var id = $(this).data('id');
-    
-
-                    // ajax GUARDAR LIBRO
+                   
                     $.ajax({
                         type: "POST",
                         url: "{{ url('ajeditbook') }}",
@@ -247,7 +244,6 @@
                             $('#genero').val(res.genero);
                             $('#numpag').val(res.numpag);
 
-
                         },
                         error: function(req,status,error){
                             console.log(req + " " + status + " " + error);
@@ -258,14 +254,10 @@
 
                 //ajax BORRAR LIBRO
                 $('body').on('click', '#btn-delete', function(event) {
-
                     var id = $("#id").val();
 
-
-                    $("#btn-delete").html('Espere un momento...');
                     $("#btn-delete").attr("disabled", true);
-
-                    // ajax GUARDAR LIBRO
+                    
                     $.ajax({
                         type: "POST",
                         url: "{{ url('ajdeletebook') }}",

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Book;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookAjaxController;
+use App\Http\Controllers\InstitutoController;
+use App\Models\Instituto;
 use GuzzleHttp\Psr7\Response;
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +25,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/instituto/edit/{id}',[InstitutoController::class, 'edit']);
+Route::resource('/instituto', InstitutoController::class);
 
 
 	Route::get('ajbooks', [BookAjaxController::class, 'index']);
 	Route::post('ajaddbook', [BookAjaxController::class, 'store']);
 	Route::post('ajeditbook', [BookAjaxController::class, 'edit']);
 	Route::post('ajdeletebook', [BookAjaxController::class, 'destroy']);
+
+    
 //"Bienvenido a la Api Laravel 20"
 
 
